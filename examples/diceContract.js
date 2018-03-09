@@ -26,15 +26,16 @@ var betContract_BobWins = new oraclize.helpers.bitcoin.Contract({ daterange: [no
 
 // 3. Define first condition set, ALICE wins if it is less than or equal to, BOB wins if it is greater than
 // Their appropriate check operations will be done when applying the conditions
-var condA_params = { datasource: 'WolframAlpha', query: 'random number between 1 and 100', value: 50 };
+var condA_params = { datasource: 'WolframAlpha', query: 'random number between 1 and 100', value: 51 };
+var condB_params = { datasource: 'WolframAlpha', query: 'random number between 1 and 100', value: 50 };
 
 
 // 4. Apply the conditions to their respective Contracts
 betContract_AliceWins.applyConditions([
-  new oraclize.Condition({})
+	new oraclize.Condition(Object.assign(condA_params, { checkOp: 'lt' }))
 ]);
 betContract_BobWins.applyConditions([
-  new oraclize.Condition(Object.assign(condA_params, { checkOp: 'gt' }))
+  new oraclize.Condition(Object.assign(condB_params, { checkOp: 'gt' }))
 ]);
 
 // 5. Initializing the Bitcoin P2SH escrow contract with previously declared contract parameters
